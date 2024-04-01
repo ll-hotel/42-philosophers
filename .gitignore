@@ -1,0 +1,6 @@
+philo
+.cache
+*.o
+*.out
+*.d
+compile_commands.json
