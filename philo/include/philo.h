@@ -52,13 +52,13 @@ struct	s_world
 
 bool	alloc_world_entities(t_world *world);
 void	threading(t_world *world);
-void	philo_life(t_philo *self);
+void	philo_life(t_philo *this);
 void	free_world_entities(t_world *world);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 long	ft_atol(const char *nptr);
 
-int		check_self_death(t_philo *self);
+int		check_this_death(t_philo *this);
 u_long	ms_sleep(t_philo *philo, u_long ms_delay, u_long *dead_philo);
 u_long	ms_now(struct timeval *tv);
 

@@ -16,13 +16,13 @@
 u_long	take_fork(t_philo *philo, u_long *dead_philo, t_fork *fork)
 {
 	pthread_mutex_lock(fork->mutex);
-	check_self_death(philo);
+	check_this_death(philo);
 	while (fork->taken && !*dead_philo)
 	{
 		pthread_mutex_unlock(fork->mutex);
 		usleep(50);
 		pthread_mutex_lock(fork->mutex);
-		check_self_death(philo);
+		check_this_death(philo);
 	}
 	if (!fork->taken)
 		fork->taken = 1;

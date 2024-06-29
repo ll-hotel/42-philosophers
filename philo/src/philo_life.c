@@ -56,7 +56,7 @@ static bool	philo_eat(t_philo *this, t_fork *dead_philo, struct timeval *tv)
 		return (false);
 	printf("%lu %lu has taken a fork\n", \
 			ms_now(tv) - this->start_time, this->id);
-	if (check_self_death(this))
+	if (check_this_death(this))
 		return (false);
 	this->last_meal_time = ms_now(tv);
 	printf("%lu %lu is eating\n", this->last_meal_time - this->start_time, \

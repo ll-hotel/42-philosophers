@@ -14,18 +14,18 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-int	check_self_death(t_philo *self)
+int	check_this_death(t_philo *this)
 {
 	struct timeval	tv[1];
 	u_long	now;
 
 	now = ms_now(tv);
-	if (now - self->last_meal_time > self->world->time_to_die)
+	if (now - this->last_meal_time > this->world->time_to_die)
 	{
-		pthread_mutex_lock(self->world->dead_philo.mutex);
-		if (self->world->dead_philo.taken == 0)
-			self->world->dead_philo.taken = self->id;
-		pthread_mutex_unlock(self->world->dead_philo.mutex);
+		pthread_mutex_lock(this->world->dead_philo.mutex);
+		if (this->world->dead_philo.taken == 0)
+			this->world->dead_philo.taken = this->id;
+		pthread_mutex_unlock(this->world->dead_philo.mutex);
 		return (1);
 	}
 	return (0);
@@ -38,7 +38,7 @@ u_long	ms_sleep(t_philo *philo, u_long ms_delay, u_long *dead_philo)
 
 	while (ms_now(tv) - start < ms_delay && !*dead_philo)
 	{
-		check_self_death(philo);
+		check_this_death(philo);
 		usleep(49);
 	}
 	return (*dead_philo);
