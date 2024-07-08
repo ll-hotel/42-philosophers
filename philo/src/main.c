@@ -5,53 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 23:03:54 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/06/24 00:29:22 by ll-hotel         ###   ########.fr       */
+/*   Created: 2024/07/13 19:45:52 by ll-hotel          #+#    #+#             */
+/*   Updated: 2024/07/18 15:37:00 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-#include <stdio.h>
-#include <string.h>
+#include "philosophers.h"
 
-static bool	parse_philo_specs(t_world *world, char *argv[]);
-
-int	main(int argc, char *argv[])
+int	main(int argc, const char **argv)
 {
-	t_world	world;
+	t_table	table;
+	int		error;
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("%s philo_nb time_to_die time_to_eat time_to_sleep " \
-				"[meals_nb]\n", argv[0]);
+		puterr("philo_nb time_to_die time_to_eat time_to_sleep" \
+				" [meals_to_eat]\n");
 		return (1);
 	}
-	memset(&world, 0, sizeof(world));
-	if (parse_philo_specs(&world, argv) == false)
-		return (1);
-	if (alloc_world_entities(&world) == false)
-		return (1);
-	threading(&world);
-	free_world_entities(&world);
-	return (0);
-}
-
-static bool	parse_philo_specs(t_world *world, char *argv[])
-{
-	world->philo_nb = ft_atol(argv[1]);
-	world->time_to_die = ft_atol(argv[2]);
-	world->time_to_eat = ft_atol(argv[3]);
-	world->time_to_sleep = ft_atol(argv[4]);
-	world->meals_nb = -1;
-	if (argv[5])
-		world->meals_nb = ft_atol(argv[5]);
-	if ((argv[4] && world->meals_nb == 0) || \
-			(world->time_to_die == 0) || \
-			(world->time_to_eat == 0) || \
-			(world->time_to_sleep == 0))
-	{
-		printf("Error\n");
-		return (false);
-	}
-	return (true);
+	error = 0;
+	if (create_table(&table, argv))
+		error = setup_routines(&table) == false;
+	else
+		error = 1;
+	free_table(&table);
+	return (error);
 }

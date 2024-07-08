@@ -5,3 +5,4 @@ philo/philo
 *.out
 *.d
 compile_commands.json
+LazyPhilosophersTester

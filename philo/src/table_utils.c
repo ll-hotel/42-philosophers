@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   table_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ll-hotel <ll-hotel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/07 17:17:28 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/06/23 23:47:25 by ll-hotel         ###   ########.fr       */
+/*   Created: 2024/07/14 17:36:37 by ll-hotel          #+#    #+#             */
+/*   Updated: 2024/07/18 15:44:48 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <string.h>
+#include "philosophers.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+long	table_get_state(t_table *table)
 {
-	unsigned char	*p;
-	size_t			bytes;
+	long	tmp;
 
-	bytes = nmemb * size;
-	if ((bytes < nmemb && size) || (bytes < size && nmemb))
-		return (NULL);
-	p = malloc(bytes);
-	if (!p)
-		return (NULL);
-	memset(p, 0, bytes);
-	return (p);
+	pthread_mutex_lock(&table->state_mutex);
+	tmp = table->state;
+	pthread_mutex_unlock(&table->state_mutex);
+	return (tmp);
+}
+
+void	table_set_state(t_table *table, long value)
+{
+	pthread_mutex_lock(&table->state_mutex);
+	table->state = value;
+	pthread_mutex_unlock(&table->state_mutex);
 }

@@ -5,42 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 04:57:15 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/08 09:53:56 by ll-hotel         ###   ########.fr       */
+/*   Created: 2024/07/13 19:16:29 by ll-hotel          #+#    #+#             */
+/*   Updated: 2024/07/14 17:26:46 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
 #include <sys/time.h>
 #include <unistd.h>
 
-int	check_this_death(t_philo *this)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	if (ms_now() - this->last_meal_time > this->world->time_to_die)
-	{
-		pthread_mutex_lock(this->world->dead_philo.mutex);
-		if (this->world->dead_philo.taken == 0)
-			this->world->dead_philo.taken = this->id;
-		pthread_mutex_unlock(this->world->dead_philo.mutex);
-		return (1);
-	}
-	return (0);
+	void	*p;
+
+	p = malloc(nmemb * size);
+	if (p)
+		memset(p, 0, nmemb * size);
+	return (p);
 }
 
-u_long	ms_sleep(t_philo *philo, u_long ms_delay, u_long *dead_philo)
-{
-	const u_long	start = ms_now();
-
-	while (ms_now() - start < ms_delay && !*dead_philo)
-	{
-		check_this_death(philo);
-		usleep(49);
-	}
-	return (*dead_philo);
-}
-
-u_long	ms_now(void)
+u_long	get_ms_time(void)
 {
 	struct timeval	tv;
 
@@ -48,14 +34,29 @@ u_long	ms_now(void)
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
-void	print_state(t_philo *this, enum e_state state)
+long	ft_atol(const char *s)
 {
-	const char	*messages[] = { \
-		"%lu %lu has taken a fork\n", \
-		"%lu %lu is eating\n", \
-		"%lu %lu is sleeping\n", \
-		"%lu %lu is thinking\n", \
-		"%lu %lu died\n"};
+	long	value;
+	int		negative;
+	int		i;
 
-	printf(messages[state], ms_now() - this->start_time, this->id);
+	value = 0;
+	i = 0;
+	while (s[i] && (s[i] == ' ' || s[i] == '\t'))
+		i++;
+	negative = (s[i] != '-') - (s[i] == '-');
+	i += (s[i] == '-' || s[i] == '+');
+	while ('0' <= s[i] && s[i] <= '9')
+		value = (value * 10) + (s[i++] - '0');
+	return (negative * value);
+}
+
+void	puterr(const char *__s)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (__s[i])
+		i += 1;
+	write(2, __s, i);
 }

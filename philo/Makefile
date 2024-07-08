@@ -14,14 +14,13 @@ ifneq ("${DEBUG}", "")
 endif
 
 OBJS = $(patsubst %.c,${OBJ_DIR}/%.o, \
-	   ft_atol.c \
-	   ft_calloc.c \
-	   fork.c \
 	   main.c \
-	   threading.c \
-	   philo_life.c \
+	   philo.c \
+	   routine.c \
+	   routines.c \
+	   table.c \
+	   table_utils.c \
 	   utils.c \
-	   world_entities.c \
 	   )
 
 DEPS = ${OBJS:.o=.d}
