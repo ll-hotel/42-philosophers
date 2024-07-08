@@ -22,8 +22,8 @@ int	main(int argc, char *argv[])
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("%s philo_number time_to_die time_to_eat time_to_sleep " \
-				"[meals_number]\n", argv[0]);
+		printf("%s philo_nb time_to_die time_to_eat time_to_sleep " \
+				"[meals_nb]\n", argv[0]);
 		return (1);
 	}
 	memset(&world, 0, sizeof(world));
@@ -38,14 +38,14 @@ int	main(int argc, char *argv[])
 
 static bool	parse_philo_specs(t_world *world, char *argv[])
 {
-	world->philo_number = ft_atol(argv[1]);
+	world->philo_nb = ft_atol(argv[1]);
 	world->time_to_die = ft_atol(argv[2]);
 	world->time_to_eat = ft_atol(argv[3]);
 	world->time_to_sleep = ft_atol(argv[4]);
-	world->meals_number = -1;
+	world->meals_nb = -1;
 	if (argv[5])
-		world->meals_number = ft_atol(argv[5]);
-	if ((argv[4] && world->meals_number == 0) || \
+		world->meals_nb = ft_atol(argv[5]);
+	if ((argv[4] && world->meals_nb == 0) || \
 			(world->time_to_die == 0) || \
 			(world->time_to_eat == 0) || \
 			(world->time_to_sleep == 0))

@@ -1,4 +1,5 @@
 philo/philo
+*.clangd
 .cache
 *.o
 *.out

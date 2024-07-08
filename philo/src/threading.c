@@ -19,13 +19,13 @@ void	threading(t_world *world)
 
 	world->dead_philo.taken = -1;
 	i = 0;
-	while (i < world->philo_number)
+	while (i < world->philo_nb)
 	{
 		if (pthread_create(&world->threads[i], NULL, \
 					(void *)philo_life, &world->philos[i]) != 0)
 		{
 			printf("Error: failed to create thread %lu\n", i);
-			leave_fork(&world->dead_philo, world->philo_number + 1);
+			leave_fork(&world->dead_philo, world->philo_nb + 1);
 			while (i > 0)
 				pthread_join(world->threads[--i], NULL);
 			return ;
@@ -34,6 +34,6 @@ void	threading(t_world *world)
 	}
 	leave_fork(&world->dead_philo, 0);
 	i = 0;
-	while (i < world->philo_number)
+	while (i < world->philo_nb)
 		pthread_join(world->threads[i++], NULL);
 }

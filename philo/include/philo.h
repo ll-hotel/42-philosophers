@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:56:47 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/06/24 06:02:54 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/08 09:51:55 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 typedef struct s_fork	t_fork;
 typedef struct s_philo	t_philo;
 typedef struct s_world	t_world;
+
+enum	e_state
+{
+	TOOK_FORK,
+	EATING,
+	SLEEPING,
+	THINKING,
+	DIED
+};
 
 struct	s_fork
 {
@@ -42,8 +51,8 @@ struct	s_world
 	u_long		time_to_die;
 	u_long		time_to_eat;
 	u_long		time_to_sleep;
-	long		meals_number;
-	u_long		philo_number;
+	long		meals_nb;
+	u_long		philo_nb;
 	t_fork		dead_philo;
 	t_fork		*forks;
 	t_philo		*philos;
@@ -59,8 +68,9 @@ void	*ft_calloc(size_t nmemb, size_t size);
 long	ft_atol(const char *nptr);
 
 int		check_this_death(t_philo *this);
+u_long	ms_now(void);
 u_long	ms_sleep(t_philo *philo, u_long ms_delay, u_long *dead_philo);
-u_long	ms_now(struct timeval *tv);
+void	print_state(t_philo *this, enum e_state state);
 
 u_long	take_fork(t_philo *philo, u_long *dead_philo, t_fork *fork);
 void	leave_fork(t_fork *fork, u_long value);
