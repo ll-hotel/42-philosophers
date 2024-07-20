@@ -6,30 +6,43 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 00:10:41 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 00:11:03 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:09:14 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <sys/time.h>
 #include <unistd.h>
 
 static bool	__take_fork(t_philo *this, t_fork *fork);
 
-void	philo_take_forks(t_philo *this)
+bool	philo_take_forks(t_philo *this)
 {
-	bool	took_left;
-	bool	took_right;
+	struct timeval	tv;
+	bool			took_left;
+	bool			took_right;
 
 	took_left = false;
 	took_right = false;
-	while ((!took_left || !took_right) && table_get_state(this->table) != END)
+	while (!took_left || !took_right)
 	{
 		if (!took_left)
 			took_left = __take_fork(this, this->left_fork);
 		if (!took_right)
 			took_right = __take_fork(this, this->right_fork);
+		if (table_get_state(this->table) != RUNNING)
+			return (false);
+		gettimeofday(&tv, NULL);
+		if ((tv.tv_sec * 1000 + tv.tv_usec / 1000) > this->table->time_to_die)
+		{
+			pthread_mutex_lock(&this->table->state_mutex);
+			this->table->state += 1;
+			pthread_mutex_unlock(&this->table->state_mutex);
+			return (false);
+		}
 		usleep(100);
 	}
+	return (true);
 }
 
 void	philo_leave_forks(t_philo *this)

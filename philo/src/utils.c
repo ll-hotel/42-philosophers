@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 19:16:29 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/14 17:26:46 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:01:12 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (p);
 }
 
-u_long	get_ms_time(void)
+inline u_long	get_ms_time(void)
 {
 	struct timeval	tv;
 

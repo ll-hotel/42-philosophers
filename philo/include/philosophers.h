@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:56:47 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 00:13:15 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:10:23 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,16 @@
 # define THINKING "is thinking"
 # define DIED "died"
 
-typedef struct s_mpv	t_mpv;
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
 typedef pthread_mutex_t	t_mutex;
 
 enum	e_state
 {
-	END = 0,
-	START = 1,
-	WAIT = 2,
-	WAITING_PHILOS = 4,
+	RUNNING = 0,
 };
 
-typedef struct	s_fork
+typedef struct s_fork
 {
 	t_mutex	mutex;
 	u_long	taken;
@@ -66,10 +62,11 @@ struct	s_table
 	long		time_to_sleep;
 };
 
-void	philo_eat(t_philo *philo);
-void	philo_msleep(const t_philo *philo, u_long delay);
+bool	philo_eat(t_philo *philo);
+bool	philo_msleep(const t_philo *philo, u_long delay);
 void	philo_log(const t_philo *philo, const char *log_txt);
 void	philo_leave_forks(t_philo *philo);
+void	philo_died(t_philo *philo);
 
 bool	create_table(t_table *table, const char **argv);
 void	free_table(t_table *table);
@@ -77,11 +74,8 @@ void	free_table(t_table *table);
 bool	setup_routines(t_table *table);
 void	philo_routine(t_philo *philo);
 void	*philo_alone_routine(t_philo *philo);
-void	monitoring_routine(t_table *table);
 
-void	*table_monitor_philos(t_table *table);
 long	table_get_state(t_table *table);
-void	table_set_state(t_table *table, long value);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 long	ft_atol(const char *nptr);
