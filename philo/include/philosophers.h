@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:56:47 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/19 21:46:17 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:13:15 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ typedef pthread_mutex_t	t_mutex;
 
 enum	e_state
 {
-	START,
-	WAIT,
-	END
+	END = 0,
+	START = 1,
+	WAIT = 2,
+	WAITING_PHILOS = 4,
 };
 
 typedef struct	s_fork
@@ -65,10 +66,10 @@ struct	s_table
 	long		time_to_sleep;
 };
 
+void	philo_eat(t_philo *philo);
 void	philo_msleep(const t_philo *philo, u_long delay);
 void	philo_log(const t_philo *philo, const char *log_txt);
 void	philo_leave_forks(t_philo *philo);
-void	philo_take_forks(t_philo *philo);
 
 bool	create_table(t_table *table, const char **argv);
 void	free_table(t_table *table);

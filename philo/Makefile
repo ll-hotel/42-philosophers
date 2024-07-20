@@ -16,6 +16,7 @@ endif
 OBJS = $(patsubst %.c,${OBJ_DIR}/%.o, \
 	   main.c \
 	   philo.c \
+	   philo_fork.c \
 	   routine.c \
 	   routines.c \
 	   table.c \

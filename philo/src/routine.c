@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:45:00 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/18 16:04:14 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:03:02 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ static bool	create_monitoring_thread(t_table *table)
 	else
 	{
 		table->start_time = get_ms_time();
+		table_set_state(table, WAITING_PHILOS);
+		while (table_get_state(table) != table->philo_nb + WAITING_PHILOS)
+			usleep(200);
 		table_set_state(table, START);
 	}
 	return (nice);

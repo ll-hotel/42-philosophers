@@ -6,11 +6,13 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:53:52 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/19 22:06:48 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 00:16:28 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <pthread.h>
+#include <stdio.h>
 #include <unistd.h>
 
 static bool	philo_must_die(t_philo *this);
@@ -20,16 +22,17 @@ void	philo_routine(t_philo *this)
 	while (table_get_state(this->table) == WAIT)
 		usleep(100);
 	this->last_meal_time = this->table->start_time;
+	pthread_mutex_lock(&this->table->state_mutex);
+	this->table->state += 1;
+	pthread_mutex_unlock(&this->table->state_mutex);
 	if (this->id % 2 == 0)
-		usleep(this->table->time_to_eat >> 1);
+	{
+		philo_log(this, THINKING);
+		usleep(500 * this->table->time_to_eat);
+	}
 	while (table_get_state(this->table) != END)
 	{
-		philo_take_forks(this);
-		philo_log(this, EATING);
-		this->meals_left -= (this->meals_left > 0);
-		this->last_meal_time = get_ms_time();
-		philo_msleep(this, this->table->time_to_eat);
-		philo_leave_forks(this);
+		philo_eat(this);
 		philo_log(this, SLEEPING);
 		philo_msleep(this, this->table->time_to_sleep);
 		philo_log(this, THINKING);
@@ -43,7 +46,7 @@ void	monitoring_routine(t_table *this)
 	long	i;
 	bool	no_more_meal;
 
-	while (table_get_state(this) == WAIT)
+	while (table_get_state(this) != START)
 		usleep(100);
 	while (this->state != END)
 	{
@@ -71,7 +74,10 @@ void	*philo_alone_routine(t_philo *this)
 	while (table_get_state(this->table) == WAIT)
 		usleep(100);
 	this->last_meal_time = this->table->start_time;
-	philo_take_forks(this);
+	pthread_mutex_lock(&this->table->state_mutex);
+	this->table->state += 1;
+	pthread_mutex_unlock(&this->table->state_mutex);
+	philo_log(this, TOOK_FORK);
 	philo_msleep(this, this->table->time_to_die);
 	return (NULL);
 }
