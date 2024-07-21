@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 00:10:41 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 15:54:25 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:02:30 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 static inline bool	take_fork(t_philo *this, t_fork *fork);
-static inline bool should_die(t_philo *this, u_long cur_time);
+static inline bool	should_die(t_philo *this, u_long cur_time);
 
 bool	philo_take_forks(t_philo *this)
 {
@@ -64,7 +64,7 @@ static inline bool	take_fork(t_philo *this, t_fork *fork)
 	return (was_available);
 }
 
-static inline bool should_die(t_philo *this, u_long cur_time)
+static inline bool	should_die(t_philo *this, u_long cur_time)
 {
 	return (cur_time - this->last_meal_time \
 			> (u_long)this->table->time_to_die);

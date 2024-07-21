@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 17:28:32 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 15:15:12 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:02:39 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-bool					philo_take_forks(t_philo *philo);
+bool			philo_take_forks(t_philo *philo);
 static inline u_long	get_ms_time(void);
 
 bool	philo_eat(t_philo *this)
