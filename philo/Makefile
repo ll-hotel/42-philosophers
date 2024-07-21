@@ -20,7 +20,6 @@ OBJS = $(patsubst %.c,${OBJ_DIR}/%.o, \
 	   routine.c \
 	   routines.c \
 	   table.c \
-	   table_utils.c \
 	   utils.c \
 	   )
 

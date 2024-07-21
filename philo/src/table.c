@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 19:25:05 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 14:15:48 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:21:28 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ void	free_table(t_table *table)
 		free(table->philos);
 	}
 	pthread_mutex_destroy(&table->state_mutex);
+}
+
+long	table_get_state(t_table *table)
+{
+	long	tmp;
+
+	pthread_mutex_lock(&table->state_mutex);
+	tmp = table->state;
+	pthread_mutex_unlock(&table->state_mutex);
+	return (tmp);
 }
 
 static bool	table_set_specs(t_table *table, const char **argv)

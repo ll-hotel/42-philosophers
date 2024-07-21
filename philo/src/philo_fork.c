@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 00:10:41 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 15:06:33 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:19:40 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-static inline bool	__take_fork(t_philo *this, t_fork *fork);
+static inline bool	take_fork(t_philo *this, t_fork *fork);
 static inline bool should_die(t_philo *this, u_long cur_time);
 
 bool	philo_take_forks(t_philo *this)
@@ -28,9 +28,9 @@ bool	philo_take_forks(t_philo *this)
 	while (!took_left || !took_right)
 	{
 		if (!took_left)
-			took_left = __take_fork(this, this->left_fork);
+			took_left = take_fork(this, this->left_fork);
 		if (!took_right)
-			took_right = __take_fork(this, this->right_fork);
+			took_right = take_fork(this, this->right_fork);
 		if (table_get_state(this->table) != RUNNING)
 			return (false);
 		gettimeofday(&tv, NULL);
@@ -51,7 +51,7 @@ void	philo_leave_forks(t_philo *this)
 	pthread_mutex_unlock(&this->right_fork->mutex);
 }
 
-static inline bool	__take_fork(t_philo *this, t_fork *fork)
+static inline bool	take_fork(t_philo *this, t_fork *fork)
 {
 	bool	was_available;
 

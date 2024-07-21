@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:56:47 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 14:59:31 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:22:13 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,11 @@ void	philo_leave_forks(t_philo *philo);
 
 bool	create_table(t_table *table, const char **argv);
 void	free_table(t_table *table);
+long	table_get_state(t_table *table);
 
 bool	setup_routines(t_table *table);
 void	philo_routine(t_philo *philo);
 void	*philo_alone_routine(t_philo *philo);
-
-long	table_get_state(t_table *table);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 long	ft_atol(const char *nptr);
