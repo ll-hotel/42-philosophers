@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 19:25:05 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 00:48:57 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:15:48 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	table_init_philos(t_table *table)
 		philo->id = i + 1;
 		philo->table = table;
 		pthread_mutex_init(&philo->own_fork.mutex, NULL);
-		philo->own_fork.taken = false;
+		philo->own_fork.available = true;
 		philo->left_fork = &philo->own_fork;
 		philo->right_fork = &table->philos[(i + 1) % table->philo_nb].own_fork;
 		philo->meals_left = table->meals_to_eat;

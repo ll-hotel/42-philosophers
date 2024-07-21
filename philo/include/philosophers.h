@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:56:47 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 14:10:23 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 14:59:31 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ typedef pthread_mutex_t	t_mutex;
 enum	e_state
 {
 	RUNNING = 0,
+	GRIEF = 42,
 };
 
 typedef struct s_fork
 {
 	t_mutex	mutex;
-	u_long	taken;
+	u_long	available;
 }	t_fork;
 
 struct	s_philo
@@ -42,6 +43,7 @@ struct	s_philo
 	t_fork		own_fork;
 	u_long		id;
 	long		meals_left;
+	u_long		start_time;
 	u_long		last_meal_time;
 	t_fork		*left_fork;
 	t_fork		*right_fork;
@@ -52,7 +54,6 @@ struct	s_table
 {
 	t_mutex		state_mutex;
 	long		state;
-	u_long		start_time;
 	t_philo		*philos;
 	pthread_t	monitoring_thread;
 	long		meals_to_eat;
@@ -63,10 +64,10 @@ struct	s_table
 };
 
 bool	philo_eat(t_philo *philo);
-bool	philo_msleep(const t_philo *philo, u_long delay);
+bool	philo_msleep(t_philo *philo, u_long delay);
 void	philo_log(const t_philo *philo, const char *log_txt);
+bool	philo_died(t_philo *philo, u_long death_time);
 void	philo_leave_forks(t_philo *philo);
-void	philo_died(t_philo *philo);
 
 bool	create_table(t_table *table, const char **argv);
 void	free_table(t_table *table);
@@ -79,7 +80,6 @@ long	table_get_state(t_table *table);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 long	ft_atol(const char *nptr);
-u_long	get_ms_time(void);
 void	puterr(const char *__s);
 
 #endif

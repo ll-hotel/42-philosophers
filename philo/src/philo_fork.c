@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 00:10:41 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 14:09:14 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:06:33 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-static bool	__take_fork(t_philo *this, t_fork *fork);
+static inline bool	__take_fork(t_philo *this, t_fork *fork);
+static inline bool should_die(t_philo *this, u_long cur_time);
 
 bool	philo_take_forks(t_philo *this)
 {
@@ -33,13 +34,8 @@ bool	philo_take_forks(t_philo *this)
 		if (table_get_state(this->table) != RUNNING)
 			return (false);
 		gettimeofday(&tv, NULL);
-		if ((tv.tv_sec * 1000 + tv.tv_usec / 1000) > this->table->time_to_die)
-		{
-			pthread_mutex_lock(&this->table->state_mutex);
-			this->table->state += 1;
-			pthread_mutex_unlock(&this->table->state_mutex);
-			return (false);
-		}
+		if (should_die(this, tv.tv_sec * 1000 + tv.tv_usec / 1000))
+			return (philo_died(this, tv.tv_sec * 1000 + tv.tv_usec / 1000));
 		usleep(100);
 	}
 	return (true);
@@ -48,22 +44,28 @@ bool	philo_take_forks(t_philo *this)
 void	philo_leave_forks(t_philo *this)
 {
 	pthread_mutex_lock(&this->left_fork->mutex);
-	this->left_fork->taken = false;
+	this->left_fork->available = true;
 	pthread_mutex_unlock(&this->left_fork->mutex);
 	pthread_mutex_lock(&this->right_fork->mutex);
-	this->right_fork->taken = false;
+	this->right_fork->available = true;
 	pthread_mutex_unlock(&this->right_fork->mutex);
 }
 
-static bool	__take_fork(t_philo *this, t_fork *fork)
+static inline bool	__take_fork(t_philo *this, t_fork *fork)
 {
-	bool	was_taken;
+	bool	was_available;
 
 	pthread_mutex_lock(&fork->mutex);
-	was_taken = fork->taken;
-	fork->taken = true;
+	was_available = fork->available;
+	fork->available = false;
 	pthread_mutex_unlock(&fork->mutex);
-	if (!was_taken)
+	if (was_available)
 		philo_log(this, TOOK_FORK);
-	return (!was_taken);
+	return (was_available);
+}
+
+static inline bool should_die(t_philo *this, u_long cur_time)
+{
+	return (cur_time - this->last_meal_time \
+			> (u_long)this->table->time_to_die);
 }
