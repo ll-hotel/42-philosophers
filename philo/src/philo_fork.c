@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 00:10:41 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 15:19:40 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 15:54:25 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	philo_take_forks(t_philo *this)
 		gettimeofday(&tv, NULL);
 		if (should_die(this, tv.tv_sec * 1000 + tv.tv_usec / 1000))
 			return (philo_died(this, tv.tv_sec * 1000 + tv.tv_usec / 1000));
-		usleep(100);
+		usleep(200);
 	}
 	return (true);
 }
