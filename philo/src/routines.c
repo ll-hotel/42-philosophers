@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:53:52 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 15:15:06 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:13:14 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	philo_routine(t_philo *this)
 		usleep(100);
 	}
 	philo_leave_forks(this);
-	philo_log(this, THINKING);
 }
 
 void	*philo_alone_routine(t_philo *this)
