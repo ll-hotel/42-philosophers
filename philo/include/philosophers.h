@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:56:47 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/21 15:22:13 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:12:54 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ struct	s_table
 {
 	t_mutex		state_mutex;
 	long		state;
+	u_long		start_time;
 	t_philo		*philos;
 	pthread_t	monitoring_thread;
 	long		meals_to_eat;
