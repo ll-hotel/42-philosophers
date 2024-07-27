@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   start_philosophers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ll-hotel <ll-hotel@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:45:00 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/22 16:14:26 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:39:55 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static long		create_philos_threads(t_table *table);
 static u_long	get_ms_now(void);
 
-bool	setup_routines(t_table *table)
+bool	start_philosophers(t_table *table)
 {
 	long	philos_threads_created;
 	long	i;

@@ -17,8 +17,8 @@ OBJS = $(patsubst %.c,${OBJ_DIR}/%.o, \
 	   main.c \
 	   philo.c \
 	   philo_fork.c \
-	   routine.c \
-	   routines.c \
+	   philo_routine.c \
+	   start_philosophers.c \
 	   table.c \
 	   utils.c \
 	   )

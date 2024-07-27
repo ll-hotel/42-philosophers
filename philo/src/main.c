@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 19:45:52 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/18 15:37:00 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:40:14 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, const char **argv)
 	}
 	error = 0;
 	if (create_table(&table, argv))
-		error = setup_routines(&table) == false;
+		error = start_philosophers(&table) == false;
 	else
 		error = 1;
 	free_table(&table);

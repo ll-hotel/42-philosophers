@@ -6,7 +6,7 @@
 /*   By: ll-hotel <ll-hotel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 22:56:47 by ll-hotel          #+#    #+#             */
-/*   Updated: 2024/07/22 16:12:54 by ll-hotel         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:40:03 by ll-hotel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ bool	create_table(t_table *table, const char **argv);
 void	free_table(t_table *table);
 long	table_get_state(t_table *table);
 
-bool	setup_routines(t_table *table);
+bool	start_philosophers(t_table *table);
 void	philo_routine(t_philo *philo);
 void	*philo_alone_routine(t_philo *philo);
 
